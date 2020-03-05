@@ -86,7 +86,7 @@ file.copy(from = paste0(dir.parent, "/Common/word-styles-reference.docx"),
 # Calculation the inflation adjustment rate from the minyr to the maxyr
 # to use in calculating changes in dollar values in real terms (inflation adjusted)
 #GDP DEFLATOR
-gdpdefl <- read.csv("~/Homework/FEUS/2017/Commercial/gdpdef_stfed.csv")
+gdpdefl <- read.csv(paste0(dir.data, "gdpdef_stfed.csv"))
 inflation<-gdpdefl[gdpdefl$YEAR == maxyr,names(gdpdefl)=="GDPDEF"]/gdpdefl[gdpdefl$YEAR == minyr,names(gdpdefl)=="GDPDEF"]
 
 ###***STATE INFO####
