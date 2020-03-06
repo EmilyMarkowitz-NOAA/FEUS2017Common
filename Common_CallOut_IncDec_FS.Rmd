@@ -8,13 +8,15 @@ output:
      reference_docx: word-styles-reference.docx
 ---
   
-```{r, a, echo=FALSE, warning=FALSE}
+```{r, a0, echo=FALSE, warning=FALSE}
 knitr::opts_chunk$set(echo=T)
 ```
 
 # Sorted by Absolute Value
 
-```{r, a, echo=FALSE, warning=FALSE}
+## `r ifelse(reg == st, reg, paste0(reg," - ", st) ) `
+
+```{r, a1, echo=FALSE, warning=FALSE}
 absvalueTF<-TRUE
 orgby<-"abs"
 ```
@@ -39,7 +41,7 @@ orgby<-"abs"
 `r text_liststocks(dat=dat, metric = "YOY", decreasingTF = T, yr=maxyr-1, lv=3, capitalizefirst=capitalizefirst, section="nominal", orgby = orgby, absvalue=absvalueTF, pctvalue=pctvalueTF, preunit = preunit, postunit = postunit)`
 
 
-```{r Paragraph_000, echo = FALSE, warning=FALSE}
+```{r, a2, echo=FALSE, warning=FALSE}
   
 ```
 
@@ -64,7 +66,7 @@ orgby<-"abs"
 
 # Sorted by Percent
 
-```{r, a, echo=FALSE, warning=FALSE}
+```{r, a3, echo=FALSE, warning=FALSE}
 orgby<-"pct"
 ```
 
@@ -88,7 +90,7 @@ orgby<-"pct"
 `r text_liststocks(dat=dat, metric = "YOY", decreasingTF = T, yr=maxyr-1, lv=3, capitalizefirst=capitalizefirst, section="nominal", orgby = orgby, absvalue=absvalueTF, pctvalue=pctvalueTF, preunit = preunit, postunit = postunit)`
 
 
-```{r Paragraph_000, echo = FALSE, warning=FALSE}
+```{r, a4, echo=FALSE, warning=FALSE}
   
 ```
 

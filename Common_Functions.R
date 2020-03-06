@@ -30,17 +30,19 @@ NOAABlueScale<-colorRampPalette(colors = c(NOAALightBlue, NOAADarkBlue))
 counter0<-"000"
 
 #######FIND PARENT DIRECTORIES############
+sectname0<-paste0("FEUS",maxyr, sectname)
 date00<-paste0(Sys.Date())
 dir.in<-getwd()
 dir.parent<-dirname(dir.in)
 dir.scripts<-paste0(dir.in, "/rscripts/")
+dir.common<-paste0(dir.parent, "/FEUS",maxyr,"Common/")
 # dir.create(dir.scripts)
 dir.output<-paste0(dir.in, "/output/")
 # dir.create(dir.output)
 dir.data<-paste0(dir.in, "/data/")
 
 ######CREATE DIRECTORIES#####
-dir.out<-paste0(dir.output, "feus", maxyr, sectname, "_", date00, ifelse(designflowin == T, "_Design", ""), "/")
+dir.out<-paste0(dir.output, sectname0, "_", date00, ifelse(designflowin == T, "_Design", ""), "/")
 dir.create(dir.out)
 
 dir.create(paste0(dir.out, "/metadata/")) #Save metadata
