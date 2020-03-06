@@ -30,7 +30,7 @@ NOAABlueScale<-colorRampPalette(colors = c(NOAALightBlue, NOAADarkBlue))
 counter0<-"000"
 
 #######FIND PARENT DIRECTORIES############
-sectname0<-paste0("FEUS",maxyr, sectname)
+sectname0<-paste0("FEUS", maxyr, sectname)
 date00<-paste0(Sys.Date())
 dir.in<-getwd()
 dir.parent<-dirname(dir.in)
