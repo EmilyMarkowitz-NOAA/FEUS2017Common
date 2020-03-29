@@ -42,7 +42,8 @@ dir.output<-paste0(dir.in, "/output/")
 dir.data<-paste0(dir.in, "/data/")
 
 ######CREATE DIRECTORIES#####
-dir.out<-paste0(dir.output, sectname0, "_", date00, ifelse(designflowin == T, "_Design", ""), "/")
+dir.out<-paste0(dir.output, sectname0, "_", date00, 
+                ifelse(designflowin == T, "_Design", ""), "/")
 dir.create(dir.out)
 
 dir.create(paste0(dir.out, "/metadata/")) #Save metadata
