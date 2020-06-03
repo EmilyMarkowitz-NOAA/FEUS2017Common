@@ -148,7 +148,7 @@ Footnotes.list.Common<-list(
   "ft_Data" = "See data sources section for more information about where each region or state's data comes from." ,
   "ft_999" = "In this table, '<1' = 0-999 fish, and '1' = 1,000-1,499 fish.",
   "ft_na" = "'NA' = not available.", 
-  "ft_FEUStool" = "Summary data is available online in the FEUS webtool [Available from https://www.st.nmfs.noaa.gov/data-and-tools/FEUS/explore-the-data]."
+  "ft_FEUStool" = "Summary data is available online in the FEUS webtool. [Available at: https://www.st.nmfs.noaa.gov/data-and-tools/FEUS/explore-the-data.]"
 )
 
 reg.order<-c("North Pacific", "Pacific", "Western Pacific (Hawai`i)", "New England", "Mid-Atlantic", "South Atlantic", "Gulf of Mexico") 
