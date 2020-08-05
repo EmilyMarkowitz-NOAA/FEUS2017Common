@@ -60,29 +60,47 @@ dir.create(paste0(dir.outputtables, "/nationaltables/")) #Save files for FEUS we
 dir.nattables<-paste0(dir.outputtables, "/nationaltables/")
 
 ######SAVE WORKING FILES########
-#From Specific Files
-listfiles<-list.files(path = dir.scripts, pattern = date0) 
 
-for (i in 1:length(listfiles)){
-  file.copy(from = paste0(dir.scripts, listfiles[i]), 
-            to = paste0(dir.out, "/rscripts/", 
-                        gsub(pattern = date0, replacement = date00, x = listfiles[i])), 
+#Word styles file (from Common)
+file.copy(from = paste0(dir.parent, "/FEUS",maxyr,"Common/word-styles-reference.docx"), 
+          to = paste0(dir.out, "/rscripts/word-styles-reference.docx"), 
+          overwrite = T)
+
+#From Specific Files
+listfiles<-list.files(path = dir.scripts) 
+listfiles0<-c(listfiles[grepl(pattern = "\\.r", 
+                              x = listfiles, ignore.case = T)], 
+              listfiles[grepl(pattern = "\\.docx", 
+                              x = listfiles, ignore.case = T)])
+listfiles0<-listfiles0[!(grepl(pattern = "~",ignore.case = T, x = listfiles0))]
+
+
+for (i in 1:length(listfiles0)){
+  file.copy(from = paste0(dir.scripts, listfiles0[i]), 
+            to = paste0(dir.out, "/rscripts/", listfiles0[i]), 
             overwrite = T)
 }
 
 #From Common Files
-listfiles<-list.files(path = paste0(dir.parent, "/Common/"), pattern = date0) 
+listfiles0<-c(list.files(path = paste0(dir.parent, "/FEUS",maxyr,"Common/"), 
+                         pattern = "\\.r", ignore.case = T)) 
+listfiles0<-listfiles0[!(grepl(pattern = "\\.rproj", 
+                               x = listfiles0, ignore.case = T))]
 
-for (i in 1:length(listfiles)){
-  file.copy(from = paste0(dir.out, listfiles[i]), 
-            to = paste0(dir.out, "/rscripts/", gsub(pattern = date0, replacement = date00, x = listfiles[i])), 
+for (i in 1:length(listfiles0)){
+  file.copy(from = paste0(dir.parent, "/FEUS",maxyr,"Common/", listfiles0[i]), 
+            to = paste0(dir.out, "/rscripts/", listfiles0[i]), 
             overwrite = T)
 }
 
-#Word styles file (from Common)
-file.copy(from = paste0(dir.parent, "/Common/word-styles-reference.docx"), 
-          to = paste0(dir.out, "/rscripts/word-styles-reference.docx"), 
-          overwrite = T)
+#Common workbook files
+listfiles0<-list.files(path = paste0(dir.parent, "/FEUS",maxyr,"Common/"), pattern = ".csv") 
+
+for (i in 1:length(listfiles0)){
+  file.copy(from = paste0(paste0(dir.parent, "/FEUS",maxyr,"Common/"), listfiles0[i]), 
+            to = paste0(dir.out, "/rawdata/", listfiles0[i]), 
+            overwrite = T)
+}
 
 
 ###***GDP INFLATION#####
@@ -94,40 +112,41 @@ inflation<-gdpdefl[gdpdefl$YEAR == maxyr,names(gdpdefl)=="GDPDEF"]/gdpdefl[gdpde
 
 ###***STATE INFO####
 #General Info
-State <- c("Alabama", "Alaska", "California", "Connecticut", 
-           "Delaware", "East Florida", "West Florida", "Georgia", "Hawai`i", 
-           "Louisiana", "Maine", "Maryland", "Massachusetts", 
-           "Mississippi", "New Hampshire", "New Jersey", "New York", 
-           "North Carolina", "Oregon", "Rhode Island", "South Carolina", 
-           "Texas",  "Virginia", "Washington") # states in order
-
-State1<-State
-State1[grep(pattern = "Florida", x = State)]<-"Florida"
-State1[grep(pattern = "Hawai`i", x = State)]<-"Hawaii"
-
-Region <- c("Gulf of Mexico", "North Pacific", "Pacific", "New England", 
-            "Mid-Atlantic", "South Atlantic", "Gulf of Mexico", "South Atlantic", "Western Pacific (Hawai`i)", 
-            "Gulf of Mexico", "New England", "Mid-Atlantic", "New England", 
-            "Gulf of Mexico", "New England", "Mid-Atlantic", "Mid-Atlantic", 
-            "South Atlantic", "Pacific", "New England", "South Atlantic", 
-            "Gulf of Mexico",  "Mid-Atlantic", "Pacific") # states in order
-
-fips <- c(1 ,2 ,6 ,9 ,10, 12, 12, 13, 15, 22,23,24,25,28,33,34,36,37,41,44,45,48,51,53)
-xstate<-c("1", "1", "1", "1", "1", "1", "2", "2", "1", "3", "2", "2", "3", "4", 
-          "4", "3", "4", "3", "2", "5", "4", "5",  "5", "3") #chapter order
-xreg<-c("7", "1", "2", "4", "5", "6", "7", "6", "3", "7", "4", "5", "4", "7", 
-        "4", "5", "5", "6", "2", "4", "6", "7",  "5", "2") #chapter order
-abbvst <- c("AL", "AK", "CA", "CT", "DE", "EFL", "WFL", "GA", "HI", 
-          "LA", "ME", "MD", "MA", "MI", "NH", "NJ", "NY",  
-          "NC", "OR", "RI", "SC", "TX",  "VA", "WA") # states in order
-abbvreg <- c("GOM", "NP", "Pac", "NE", 
-            "MA", "SA", "GOM", "SA", "WP", 
-            "GOM", "NE", "MA", "NE", 
-            "GOM", "NE", "MA", "MA", 
-            "SA", "Pac", "NE", "SA", 
-            "GOM",  "MA", "Pac") # states in order
-fipscodes <- data.frame(State, State1, fips, Region, abbvst, abbvreg, xstate, xreg)
-statereg <- fipscodes
+# State <- c("Alabama", "Alaska", "California", "Connecticut", 
+#            "Delaware", "East Florida", "West Florida", "Georgia", "Hawai`i", 
+#            "Louisiana", "Maine", "Maryland", "Massachusetts", 
+#            "Mississippi", "New Hampshire", "New Jersey", "New York", 
+#            "North Carolina", "Oregon", "Rhode Island", "South Carolina", 
+#            "Texas",  "Virginia", "Washington") # states in order
+# 
+# State1<-State
+# State1[grep(pattern = "Florida", x = State)]<-"Florida"
+# State1[grep(pattern = "Hawai`i", x = State)]<-"Hawaii"
+# 
+# Region <- c("Gulf of Mexico", "North Pacific", "Pacific", "New England", 
+#             "Mid-Atlantic", "South Atlantic", "Gulf of Mexico", "South Atlantic", "Western Pacific (Hawai`i)", 
+#             "Gulf of Mexico", "New England", "Mid-Atlantic", "New England", 
+#             "Gulf of Mexico", "New England", "Mid-Atlantic", "Mid-Atlantic", 
+#             "South Atlantic", "Pacific", "New England", "South Atlantic", 
+#             "Gulf of Mexico",  "Mid-Atlantic", "Pacific") # states in order
+# 
+# fips <- c(1 ,2 ,6 ,9 ,10, 12, 12, 13, 15, 22,23,24,25,28,33,34,36,37,41,44,45,48,51,53)
+# xstate<-c("1", "1", "1", "1", "1", "1", "2", "2", "1", "3", "2", "2", "3", "4", 
+#           "4", "3", "4", "3", "2", "5", "4", "5",  "5", "3") #chapter order
+# xreg<-c("7", "1", "2", "4", "5", "6", "7", "6", "3", "7", "4", "5", "4", "7", 
+#         "4", "5", "5", "6", "2", "4", "6", "7",  "5", "2") #chapter order
+# abbvst <- c("AL", "AK", "CA", "CT", "DE", "EFL", "WFL", "GA", "HI", 
+#           "LA", "ME", "MD", "MA", "MI", "NH", "NJ", "NY",  
+#           "NC", "OR", "RI", "SC", "TX",  "VA", "WA") # states in order
+# abbvreg <- c("GOM", "NP", "Pac", "NE", 
+#             "MA", "SA", "GOM", "SA", "WP", 
+#             "GOM", "NE", "MA", "NE", 
+#             "GOM", "NE", "MA", "MA", 
+#             "SA", "Pac", "NE", "SA", 
+#             "GOM",  "MA", "Pac") # states in order
+# fipscodes <- data.frame(State, State1, fips, Region, abbvst, abbvreg, xstate, xreg)
+# statereg <- fipscodes
+statereg<-read.csv(file = paste0(dir.parent, "/FEUS",maxyr,"Common/statereg.csv"))
 
 
 #####KNOWNS#####
