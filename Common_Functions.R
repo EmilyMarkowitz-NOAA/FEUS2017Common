@@ -584,6 +584,7 @@ tolower2<-function(str0, capitalizefirst=F) {
         "South Atlantic", 
         #For specific Species
         "Spanish", "Gulf", "Bringham's", "Von Siebold's", "Pfluger's", "African", "Eurpoean",
+        "Southern kingfish", "Southern flounder",
         # Other
         "Atlantic", "American", 
         "Atka", "Chinook", "Great Lakes") 
