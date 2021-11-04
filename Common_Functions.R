@@ -9,7 +9,7 @@ library(officer)
 library(data.table) # := to tag species codes
 library(sas7bdat)
 library(ggplot2)
-require(plyr)  #ddply function
+#require(plyr)  #ddply function
 library(dichromat)
 library(readxl)
 library(extrafont)
@@ -315,6 +315,7 @@ funct_df2js<-function(df.dat, minyr, maxyr) {
   # str0<-gsub(pattern = '\\\"', replacement = '"', x = str0, fixed = T)
   str0<-gsub(pattern = '\\\"', replacement = '', x = str0, fixed = T)
   str0<-gsub(pattern = '\\.\\]', replacement = '\\.\\"\\]', x = str0)
+  str0<-gsub(pattern = '\\)\\]', replacement = '\\)\\"\\]', x = str0)
   
   
   #make year numeric
@@ -1020,7 +1021,7 @@ funct_save<-function(Tfootnotes = NA,
   webtool<-data.frame(webtool)
   webtool$Footnotes<-as.character(list2string.webtool(x = webtool$Footnotes))  #Convert Footnote from list
   
-  #add State and Region collumns
+  #add State and Region columns
   if (sum(names(webtool) %in% c("State", "Region"))>1) {
     webtool<-webtool
   } else if (sum(names(webtool) %in% "State")>0) {
